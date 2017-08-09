@@ -8,23 +8,20 @@ dst_root=/root/dst #the destination folder root
 dst=$dst_root/$day0 #destination folder w/ today date
 last=$(ls $dst_root -Art | tail -n 1) 
 lnk=/root/dst/$last #we synk w/ the most recent folder
-optInc='-avh --link-dest="$lnk"'
+optInc='-avh --delete --link-dest="$lnk"'
 optFul='-avh'
-
-
-#while we are above the occupation threshoold we keep deleting the oldest folder in the backup root
-disksize=$(du -sk $dst_root |cut -f1)
-disk=$(df -k $dir | nawk '!Filesystem/ print{$2})')
-percentage=eval($disksize/$disk)
 limit=85
 
-while [ $percentage -gt $limit]
+#chande sda w/ the device wich contains the backup folder
+percentage=$(df | grep 'sda' | awk 'BEGIN{} {percent+=$5;} END{print percent}')
+while [ $percentage -gt 85 ]
 do
 	rm -r $(ls $dst_root -t -r | head -n 1)
-	disksize=$(du -sk $dst_root |cut -f1)
-	disk=$(df -k $dir | nawk '!Filesystem/ print{$2})')
-	percentage=eval($disksize/$disk)
+	percentage=$(df | grep 'sda' | awk 'BEGIN{} {percent+=$5;} END{print percent}')
 done 
+
+
+
 
 if [ -n "$last"  ]; 
 then
