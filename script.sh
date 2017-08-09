@@ -21,6 +21,9 @@ limit=85
 while [ $percentage -gt $limit]
 do
 	rm -r $(ls $dst_root -t -r | head -n 1)
+	disksize=$(du -sk $dst_root |cut -f1)
+	disk=$(df -k $dir | nawk '!Filesystem/ print{$2})')
+	percentage=eval($disksize/$disk)
 done 
 
 if [ -n "$last"  ]; 
