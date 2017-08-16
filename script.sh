@@ -2,12 +2,11 @@
 
 
 #dst must contaion ONLY the backups, can be on a remote destination. see rsynk documentation
-day0=$(date '+%Y%m%d') 
+current_day=$(date '+%Y%m%d') 
 src=/root/src/ #the folder that has to be bcked
 dst_root=/root/dst #the destination folder root
-dst=$dst_root/$day0 #destination folder w/ today date
-last=$(ls $dst_root -Art | tail -n 1) 
-lnk=/root/dst/$last #we synk w/ the most recent folder
+dst=$dst_root/current_day #destination folder w/ today date 
+lnk=/root/dst/$(ls $dst_root -Art | tail -n 1) #we synk w/ the most recent folder
 optInc='-avh --delete --link-dest="$lnk"'
 optFul='-avh'
 limit=85
