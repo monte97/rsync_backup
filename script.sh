@@ -4,7 +4,7 @@
 #dst must contaion ONLY the backups, can be on a remote destination. see rsynk documentation
 current_day=$(date '+%Y%m%d') 
 src=/root/src/ #the folder that has to be bcked, contains the subfolder
-dst_root=/srv/dev-disk-by-label-pool/dst
+dst_root=/root/dst
 dst=$dst_root/$current_day #destination folder w/ today date 
 last=$(ls $dst_root -Art | tail -n 1) 
 lnk=$dst_root/$last
